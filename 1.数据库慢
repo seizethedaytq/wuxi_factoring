@@ -1,0 +1,16 @@
+# 现象
+客户反馈操作非常慢，30秒左右返回
+# 过程
+排查过程：拉出mysql 慢日志拉出来，逐个分析，使用explain分析是否使用索引。再给慢查询加上索引，或者优化sql
+
+```jsx
+explain
+select  
+        id, code, sales_plan_name, project_code, project_name, gc_name, plan_date, plan_enter_date,
+    total_amount, status, create_by, is_fin, is_deleted, gmt_create, gmt_modify
+     
+        from scbs_sales_plan
+        where code = 'XM202512260001-035' and is_deleted = 'N'
+```
+# 复盘
+开发人员开发时，未对表数据量进行评估，未建立索引，属于开发过程规范问题，可以通过review解决
